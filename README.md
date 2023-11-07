@@ -1,16 +1,14 @@
 # DHT-TempAPI
-A Raspberry PI, DHT 22 Sensor, FLASK Powered Python Script.
+A Raspberry PI; DHT 22 Temp/Humidity API Endpoint
 
+# Description
+This is an API Endpoint, that returns Temperature / Humidity in Json format.
+It allows for easy integration with Home Assistant, or Grafana (with some timestamp changes)
+Uses basic caching of data. So if the DHT 22 Driver fails, or times out (Which, can often happen). It won't return null or empty values in the Json values.
+Farily consistant / reliable. Is being used on a very old RaspberryPi model b, so some new models may have issues. 
+Can be easily changed to use DHT11. But... discourage, as DHT22 has +-1 degree. Vs +-5 degree for the DHT11.
 
-# Configure:
-Change Pin Settings Depending on Pi version
-Install dependencies, including the DHT Raspberry Pi Driver.
-Change Ports of Flask if needed, or change what IP it listens on.
-Adjust timer, for how often it refreshes / retries.
-
-
-
-# Concerns..
+## Concerns / issues
 This App / Pi driver.. doesn't work great sometimes..
 
 Key Points. When it first starts up, it doesn't do the Polling of the Sensor. So it will take until the Timer finally fires. Then with more detailed below, sensor timing issues. It can take 30s-2 minutes before the data is loaded into the cache.. Until that time the API call will return 500. 
@@ -21,7 +19,14 @@ Which means, The Pi DHT Driver timed out. So the app will retry the sensor.
 
 It will warn / give a count for how many retires there has been. But it won't stop retrying the sensor.
 
-## How to use:
+## Configure:
+Change Pin Settings, or change code pin assignment. Depending on Pi version
+Install dependencies, including the DHT Raspberry Pi Driver.
+Change Ports of Flask if needed, or change what IP it listens on.
+Adjust timer, for how often it refreshes / retries.
+
+
+# How to use:
 Startup app: `python3 tempAPI.py` (require python 3, flask, DHT raspberry pi Libraries etc)
 Once running, goto endpoint <raspberrypi_IP_Address>/itemps
 
