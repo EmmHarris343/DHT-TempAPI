@@ -2,11 +2,11 @@
 A Raspberry PI, DHT 22 Sensor, FLASK Powered Python Script.
 
 
-#Configure:
+# Configure:
 Change Pin Settings Depending on Pi version
 Install dependencies, including the DHT Raspberry Pi Driver.
 Change Ports of Flask if needed, or change what IP it listens on.
-Adjust timer, for how often it refreshes.
+Adjust timer, for how often it refreshes / retries.
 
 
 
@@ -21,21 +21,22 @@ Which means, The Pi DHT Driver timed out. So the app will retry the sensor.
 
 It will warn / give a count for how many retires there has been. But it won't stop retrying the sensor.
 
-# How to use:
-Startup app, (require python 3, flask, DHT raspberry pi Libraries)
+## How to use:
+Startup app: `python3 tempAPI.py` (require python 3, flask, DHT raspberry pi Libraries etc)
 Once running, goto endpoint <raspberrypi_IP_Address>/itemps
 
 For Auto-start / Restart when crashed.. Can be added to systemd
-1. Create folder in /etc/systemd/system/
-2. `sudo nano pi-tempapi.service`
-3. Paste Config from pi.tempapi.service in Repo.
-4. `sudo chmod 755 pi-tempapi.service`
-5. `sudo chown root:root pi-tempapi.service`
-6. `sudo systemctl daemon-reload`
-7. `sudo systemctl enable pi-tempapi.service`
-8. `sudo systemctl start pi-tempapi.service`
+1. Can install anywhere you want. But Systemd file points to /opt/DHT/tempAPI.py - Change this if you plan on installing somewhere else.
+2. Create config File, or copy paste from repo, place in /etc/systemd/system/
+3. `sudo nano /etc/systemd/system/pi-tempapi.service`
+4. Paste Config from pi.tempapi.service in Repo.
+5. `sudo chmod 755 pi-tempapi.service`          - Allow it to be executed / read, execute.
+6. `sudo chown root:root pi-tempapi.service`    - Change to Root fowner
+7. `sudo systemctl daemon-reload`
+8. `sudo systemctl enable pi-tempapi.service`
+9. `sudo systemctl start pi-tempapi.service`
 
-If it crashes or doesn't start. Run Manually with python3 tempPAI.py or check:
+If it crashes or doesn't start. Run Manually with `python3 tempPAI.py` or check:
 1. `sudo systemctl -u pi-tempapi.service`
 2. `sudo systemctl info pi-tempapi.service`
 3. `sudo systemctl status pi-tempapi.service`
