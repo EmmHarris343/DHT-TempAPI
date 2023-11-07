@@ -21,3 +21,23 @@ Which means, The Pi DHT Driver timed out. So the app will retry the sensor.
 
 It will warn / give a count for how many retires there has been. But it won't stop retrying the sensor.
 
+# How to use:
+Startup app, (require python 3, flask, DHT raspberry pi Libraries)
+Once running, goto endpoint <raspberrypi_IP_Address>/itemps
+
+For Auto-start / Restart when crashed.. Can be added to systemd
+1. Create folder in /etc/systemd/system/
+2. `sudo nano pi-tempapi.service`
+3. Paste Config from pi.tempapi.service in Repo.
+4. `sudo chmod 755 pi-tempapi.service`
+5. `sudo chown root:root pi-tempapi.service`
+6. `sudo systemctl daemon-reload`
+7. `sudo systemctl enable pi-tempapi.service`
+8. `sudo systemctl start pi-tempapi.service`
+
+If it crashes or doesn't start. Run Manually with python3 tempPAI.py or check:
+1. `sudo systemctl -u pi-tempapi.service`
+2. `sudo systemctl info pi-tempapi.service`
+3. `sudo systemctl status pi-tempapi.service`
+
+Hopefully that's all it will take. GL
